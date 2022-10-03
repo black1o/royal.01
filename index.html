@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js" integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 500;
+}
+body {
+	background-color: #dde1e7;
+}
+.main-form {
+	display: flex;
+	flex-direction: column;
+	gap: .7rem;
+	margin: .8rem;
+}
+.input-container {
+	padding: .65rem;
+	display: flex;
+	gap: .3rem;
+	background-color: #dde1ef;
+	border-radius: 99px;
+	box-shadow: inset 1px 1px 2.5px #babecc, inset -5px -5px 10px rgba(255, 255, 255, .4); /*#ffffff73*/
+
+}
+.input-container img {
+	width: 1.25rem;
+	opacity: .5;
+}
+.input-container input,
+.input-container select {
+	background-color: transparent;
+	border: none;
+	width: 100%;
+	font-size: .9rem;
+}
+.input-container input:focus ,
+.input-container select:focus {
+	outline: none;
+}
+.input-grid {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   grid-template-rows: 1fr;
+   grid-column-gap: 8px;
+   grid-row-gap: 0px;
+}
+.input-grid .div1 { grid-area: 1 / 1 / 2 / 2; text-align: center;}
+.input-grid .div2 { grid-area: 1 / 2 / 2 / 3; text-align: center;}
+.clear-btn {
+	color: #e74c3c;
+	width: 100%;
+	padding: .65rem;
+	background-color: transparent;
+	border: none;
+	font-weight: 600;
+}
+.view-btn {
+	color: #e74c3c;
+	width: 100%;
+	padding: .65rem;
+	background-color: #dde1e7;
+	border: none;
+	font-weight: 800;
+	border-radius: 99px;
+	box-shadow: 1px 1px 2.5px #babecc, -2px -2px 10px #ffffff73;
+}
+/*___________________________________________*/
+#exportPdf {
+	margin: .5rem;
+	padding: .25rem;
+	border: .5px solid rgba(0, 0, 0, .3);
+	background-image: url('./watermark.png');
+	background-size: 80%;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.head-pdf {
+	width: 100%;
+	display: flex;
+	gap: .3rem;
+}
+.head-pdf div img {
+	width: 2rem;
+}
+.head-pdf .child2 {
+	padding: .5rem;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+.head-pdf .child1,
+.head-pdf .child3 {
+	padding: .5rem;
+	width: 25%;
+}
+.head-pdf .child3 {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+.details {
+   padding: .5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  border-top: 2.5px solid #e74c3c;
+}
+.details div b {
+	font-weight: 600;
+	color: #e74c3c;
+}
+.details div span {
+	color: rgba(0, 0, 0, .5)!important;
+}
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div3 { grid-area: 2 / 1 / 3 / 2; }
+.div4 { grid-area: 2 / 2 / 3 / 3; }
+.div5 { grid-area: 3 / 1 / 4 / 2; }
+.div6 { grid-area: 3 / 2 / 4 / 3; }
+.details .div1,
+.details .div3,
+.details .div4,
+.details .div5,
+.details .div6 {
+	display: flex;
+	flex-direction: column;
+}
+/* billing grid */
+.billing-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+.billing-grid {
+   width: 220px;
+   padding: .5rem;
+   display: grid;
+   grid-template-columns: 70% 30%;
+   grid-template-rows: repeat(7, 1fr);
+   grid-column-gap: 0px;
+   grid-row-gap: 0px;
+   
+}
+.billing-grid div {
+	padding: .2rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	border-top: 1px solid rgba(0, 0, 0, .1);
+}
+.billing-grid div:nth-child(odd) {
+	font-weight: 600;
+}
+.billing-grid div:nth-child(even) {
+	color: rgba(0, 0, 0, .5);
+}
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 2 / 2 / 3; }
+.div3 { grid-area: 2 / 1 / 3 / 2; }
+.div4 { grid-area: 2 / 2 / 3 / 3; }
+.div5 { grid-area: 3 / 1 / 4 / 2; }
+.div6 { grid-area: 3 / 2 / 4 / 3; }
+.div7 { grid-area: 4 / 1 / 5 / 2; }
+.div8 { grid-area: 4 / 2 / 5 / 3; }
+.div9 { grid-area: 5 / 1 / 6 / 2; }
+.div10 { grid-area: 5 / 2 / 6 / 3; }
+.div11 { grid-area: 6 / 1 / 7 / 2; }
+.div12 { grid-area: 6 / 2 / 7 / 3; }
+.div13 { grid-area: 7 / 1 / 8 / 2; }
+.div14 { grid-area: 7 / 2 / 8 / 3; }
+
+.img-area {
+	display: flex;
+	justify-content: space-between;
+}
+.img-area .img-area-child img {
+	width: 5rem;
+}
+#qrCode {
+	height: 5em;
+	width: 5em;
+}
+.footer {
+   padding: .35rem 0rem .35rem 0rem;
+   font-size: .5rem;
+   /*border-top: .5px solid rgba(0, 0, 0, .5);*/
+   border-bottom: 1.5px solid rgba(0, 0, 0, .25);
+}
+.footer div {
+	display: flex;
+	justify-content: space-between;
+}
+.footer div a {
+	text-decoration: none;
+	color: rgba(0, 0, 0, .5);
+	display: flex;
+	align-items: center;
+	gap: .1rem;
+}
+.footer div a img {
+	width: .5rem;
+	opacity: .5;
+}
+
+/* devloper signature */
+.dev {
+	display: flex;
+	justify-content: center;
+	gap: .1rem;
+	font-size: .2em;
+	padding: .1rem;
+	color: rgba(0,0,0,.5);
+}
+.dev b {
+	font-weight: 700;
+	color: #FF0041
+}
+
+/* buttons download and share */
+.download,
+#share div {
+	z-index: 1;
+	height: 3rem;
+	width: 3rem;
+	border-radius: 99px;
+	box-shadow: 1px 2px 5px rgba(0, 0, 0, .25);
+	background-size: 50%;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.download {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	background-image: url("./download.png");
+	background-color: rgba(231, 77, 60, .8);
+}
+#share div{
+	position: fixed;
+	bottom: 5rem;
+	right: 1rem;
+	background-image: url("./whatsapp.png");
+	background-color: rgba(37, 211, 102, .8);
+}
+
+/*login method*/
+#login-container {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	overflow: -moz-scrollbars-vertical;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+#login-container .form {
+	width: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: .5rem;
+}
+#login-container .form input, 
+#login-container .form button {
+	width: 100%;
+	padding: .6rem;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 3px;
+	font-size: 1em;
+}
+#pin-pwd {
+	position: relative;
+	animation: incorrect 1s;
+	background-color: rgba(0, 0, 0, .02);
+	border: 1px solid rgba(0, 0, 0, .5);
+	animation: none 0.2s ease-in-out 0s 2;
+}
+@keyframes innocent {
+  0% { margin-left: 0rem; 
+  border: 1px solid rgba(252, 3, 3, .5);
+  box-shadow: 0 0 5px rgba(252, 3, 3, .5);
+  }
+  25% { margin-left: 0.5rem; }
+  75% { margin-left: -0.5rem; }
+  100% { margin-left: 0rem; 
+   border: 1px solid rgba(252, 3, 3, .5);
+   box-shadow: 0 0 5px rgba(252, 3, 3, .5);
+   }
+}
+#login-container .form button {
+	background: #000;
+	color:  #fff;
+	border: none;
+}
+/*capital text*/
+#nameOutput,
+#durationOutput,
+#modeOutput,
+#patnerOutput,
+#walletOutput {
+	text-transform: capitalize;
+}
+#bookingOutput {
+	text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<!--fixed buttons-->
+<div class="download" onclick='exportPdf();'></div>
+<a href="" id="share">
+	<div></div>
+</a>
+
+<!--login method-->
+<div id="login-container">
+<div class="form">
+<img src="./fingerprint.gif" alt="fingerprint gif" width="100">
+<h2 id="alert-msg"></h2>
+<input id="pin-pwd" type="number" placeholder="Enter PIN">
+<button onclick="setLogin()">Login</button>
+</div>
+</div>
+
+<!--main form-->
+<div class="main-form">
+	
+	<div class="input-container">
+		<img src="./hotel.png">
+		<select class="propertyAdd">
+			<option value="">Select Property.</opation> 
+			<option value="green">Green Park</opation> 
+			<option value="pandav">Pandav Nagar</opation> 
+			<option value="key">Discovery Key</opation> 
+			<option value="shashi">Shashi Garden</opation>
+		</select>
+    </div>
+    
+	<div class="input-container">
+		<img src="./user.png">
+		<input type="text" placeholder="Guest" id="name">
+    </div>
+    
+    <div class="input-container">
+		<img src="./id.png">
+		<input type="text" placeholder="Booking ID" id="booking">
+    </div>
+    
+    <div class="input-container">
+		<img src="./user.png">
+		<select id="patner">
+			<option value="">Select Booking Patner</opation> 
+			<option value="oyo">OYO</opation> 
+			<option value="booking.com">Booking.com</opation> 
+			<option value="MakeMyTrip">MakeMyTrip</opation> 
+			<option value="other">Other</opation>
+		</select>
+    </div>
+    
+    <div class="input-container">
+    	<img src="./smartphone.png">
+    	<input type="number" placeholder="Mobile Number" id="mobile">
+    </div>
+    
+    <div class="input-grid">
+    	
+    <div class="div1">
+    	Check IN
+    	<div class="input-container">
+    	<img src="./check-in-desk.png">
+        <input type="date" id="checkin">
+        </div>
+    </div>
+    
+    <div class="div2">
+    	Check OUT
+    	<div class="input-container">
+    	<img src="./check-out.png">
+        <input type="date" id="checkout">
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="input-grid">
+    	
+    <div class="div1">
+        <div class="input-container">
+    	<img src="./door.png">
+    	<input type="number" placeholder="Room No" id="room">
+        </div>
+    </div>
+    
+    <div class="div2">
+        <div class="input-container">
+    	<img src="./calendar.png">
+    	<input type="text" placeholder="Stay Duration" id="duration">
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="input-grid">
+    	
+    <div class="div1">
+    	<div class="input-container">
+    	<img src="./rupee.png">
+    	<input type="number" placeholder="Amount" id="amount">
+        </div>
+    </div>
+    
+    <div class="div2">
+    	<div class="input-container">
+    	<img src="./global-network.png">
+    	<input type="text" placeholder="Payment Mode" id="mode">
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="input-grid">
+    	
+    <div class="div1">
+    	<div class="input-container">
+    	<img src="./payment-method.png">
+    	<input type="number" placeholder="Cash" id="cash">
+        </div>
+    </div>
+    
+    <div class="div2">
+    	<div class="input-container">
+    	<img src="./paid-oyo.png">
+    	<input type="number" placeholder="Paid to OYO" id="oyopaid">
+        </div>
+    </div>
+    
+    </div>
+    
+    <div class="input-grid">
+    	
+    <div class="div1">
+    	<div class="input-container">
+    	<img src="./wallet.png">
+    	<input type="text" placeholder="Paytm, Gpay" id="wallet">
+        </div>
+    </div>
+    
+    <div class="div2">
+    	<div class="input-container">
+    	<img src="./gross.png">
+    	<input type="number" placeholder="Total" id="total">
+        </div>
+    </div>
+    
+    </div>
+    
+    <!--clear and view button-->
+    <div class="input-grid">
+    	<div class="div1">
+    	<button class="clear-btn">CLEAR</button>
+        </div>
+        
+        <div class="div2">
+        <button class="view-btn" onclick='viewInvoice(); generateQRCode();'>VIEW INVOICE</button>
+        </div>
+    </div>
+    
+</div><!--end main-form-->
+
+<!--exportPdf-->
+<div id="exportPdf">
+
+<!--head pdf-->
+<div class="head-pdf">
+	
+	<div class="child1">
+		<img src="./logo.png" alt="royal discovery logo">
+    </div>
+    
+    <div class="child2">
+    	<h1 id="lex">Royal Discovery</h1>
+        <span class="propertyAddOP"></span>
+        <span id="propertyMob">
+    </div>
+    
+    <div class="child3">
+    	<img src="./oyo.logo.png" alt="oyo logo">
+        <h5>#Invoice</h5>
+    </div>
+</div><!--end head pdf-->
+
+<!--details-->
+<div class="details">
+	
+<div class="div1">
+	<b>Bill To:-</b>
+	<span id="nameOutput">Guest Name</span>
+	<span id="mobileOutput">1234567890</span>
+</div>
+
+<div class="div2">
+	<span>
+		<b>Booking ID:</b> <span id="bookingOutput" >123ABCZY00</span>
+	</span>
+</div>
+
+<div class="div3">
+	<b>Check In:</b>
+	<span id="checkinOutput">00/00/0000</span>
+</div>
+<div class="div4">
+	<b>Check Out:</b>
+	<span id="checkoutOutput">00/00/0000</span>
+</div>
+<div class="div5">
+	<b>Room No:</b>
+	<span id="roomOutput">101</span>
+</div>
+<div class="div6">
+	<b>Stay Duration:</b>
+	<span id="durationOutput">2 Days</span>
+</div>
+</div><!--end details-->
+
+<!--billing grid-->
+<div class="billing-container">
+	
+<div class="billing-grid">
+<div class="div1">Amount:</div>
+<div class="div2" id="amountOutput"> 1200</div>
+<div class="div3" >Payment mode:</div>
+<div class="div4" id="modeOutput">Online</div>
+<div class="div5">Paid to OYO:</div>
+<div class="div6" id="oyopaidOutput">1200</div>
+<div class="div7">Booked By:</div>
+<div class="div8" id="patnerOutput">OYO</div>
+<div class="div9">Cash:</div>
+<div class="div10" id="cashOutput">0</div>
+<div class="div11">Card, wallet etc:</div>
+<div class="div12" id="walletOutput">0</div>
+<div class="div13">Total</div>
+<div class="div14" id="totalOutput">1200</div>
+</div>
+
+</div><!--end billing grid-->
+
+<!--qr and stamp-->
+<div class="img-area">
+	
+	<canvas id="qrCode"></canvas>
+	
+	<div class="img-area-child">
+		<img src="./vikash.png">
+		<img src="./stamp-dummy.png" id="propertyStamp">
+    </div>
+    
+</div>
+<!--end qr and stamp-->
+
+<!--footer-->
+<div class="footer" style="margin:.5rem;">
+	Thank you for coming ❤️
+	<div class="footer-child">
+		<a href="#">
+			<img src="./instagram.png">@royaldiscovery
+		</a>
+		<a href="#">
+			<img src="./facebook.png"> fb.com/royaldiscovery 
+		</a>
+		<a href="#">
+			<img src="./email.png">hello@royaldiscovery.in
+		</a>
+    </div>
+</div><!--end footer-->
+
+<div class="dev">
+	MADE WITH ♡ IN 🇮🇳 by  <b>Abhay</b>
+</div>
+</div><!--end exportPdf-->
+	
+	
+<!--javascript code and plugin-->
+<script>
+function exportPdf() {
+var element = document.getElementById('exportPdf');
+var opt = {
+  margin:       0.1,
+  filename:     'invoice.pdf',
+  image:        { type: 'jpeg', quality: 1 },
+  html2canvas:  { scale: 5 },
+   jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+   };
+   // New Promise-based usage:
+  html2pdf().set(opt).from(element).save();
+
+   // Old monolithic-style usage:
+   //html2pdf(element, opt); 
+}
+</script>
+
+<script>
+function setLogin() {
+  const pw = document.querySelector('#pin-pwd');
+  const msg = document.querySelector('#alert-msg');
+  const match = pw.value;
+  if (match === '3376') {
+    msg.textContent = 'Welcome back 😎,  Have a nice day.';
+    document.getElementById('login-container').style.display = "none";
+    
+  } else {
+    msg.textContent = 'oops 😐 incorrect pin..';
+    document.getElementById('pin-pwd').style.animation = "innocent 0.2s ease-in-out 0s 2";
+  }
+}
+</script>
+
+<script>
+function viewInvoice() {
+ var name = document.getElementById('name').value;
+ var booking = document.getElementById('booking').value;
+ var checkin = document.getElementById('checkin').value;
+ var checkout = document.getElementById('checkout').value;
+ var mobile = document.getElementById('mobile').value;
+ var room = document.getElementById('room').value;
+ var duration = document.getElementById('duration').value;
+ var amount = document.getElementById('amount').value;
+ var mode = document.getElementById('mode').value;
+ var oyopaid = document.getElementById('oyopaid').value;
+ var cash = document.getElementById('cash').value;
+ var wallet = document.getElementById('wallet').value;
+ var total = document.getElementById('total').value;
+ var patner = document.getElementById('patner').value;
+
+ document.getElementById("nameOutput").innerHTML = name;
+ document.getElementById("bookingOutput").innerHTML = booking;
+ document.getElementById("checkinOutput").innerHTML = checkin;
+ document.getElementById("checkoutOutput").innerHTML = checkout;
+ document.getElementById("mobileOutput").innerHTML = mobile;
+ document.getElementById("roomOutput").innerHTML = room;
+ document.getElementById("durationOutput").innerHTML = duration;
+ document.getElementById("amountOutput").innerHTML = amount;
+ document.getElementById("modeOutput").innerHTML = mode;
+ document.getElementById("oyopaidOutput").innerHTML = oyopaid;
+ document.getElementById("cashOutput").innerHTML = cash;
+ document.getElementById("walletOutput").innerHTML = wallet;
+ document.getElementById("totalOutput").innerHTML = total;
+ document.getElementById("patnerOutput").innerHTML = patner;
+ 
+  var wa = "https://wa.me/+91";
+  var c = wa+mobile;
+  document.getElementById("share").href = c;
+  
+  //show hidden button 
+  document.getElementById("hiddenBtn").style='display: flex;' ;
+}
+</script>
+
+<script>
+let qr;
+(function () {
+    qr = new QRious({
+    element: document.querySelector("#qrCode"),
+    size: 200,
+    value: "Code Grind",
+    /*
+      background: "#123456",
+      backgroundAlpha: 0.7,
+      foreground: "darkcyan",
+      foregroundAlpha: 0.5, 
+      padding: 20, 
+      level: "H",
+    */
+  });
+})();
+
+const generateQRCode = () => {
+  const qrText = document.querySelector("#booking").value;
+  qr.set({
+    value: qrText,
+  });
+};
+</script>
+
+<script>
+const select = document.querySelector('.propertyAdd');
+const para = document.querySelector('.propertyAddOP');
+select.addEventListener('change', setHotel);
+
+function setHotel() {
+  const choice = select.value;
+
+  if (choice === 'green') {
+    para.textContent = 'Ho. No: 46/34 Near Green Park Metro Station Gate Number-1 New Delhi 110016 IN.';
+    var propertyMob = '+91 82875-99290, +91 99 5842-9000';
+    var propertyStamp = './green.stamp.png';
+    document.getElementById("propertyMob").innerHTML = propertyMob;
+    document.getElementById("propertyStamp").src = propertyStamp;
+    
+  } else if (choice === 'pandav') {
+    para.textContent = 'J-4, Gali No. 8, Pandu Nagar Near Janta Dairy, Delhi - 110092, Delhi';
+    var propertyMob = '+91 82875 99290'; 
+    var propertyStamp = './pandav.stamp.png';
+    document.getElementById("propertyMob").innerHTML = propertyMob;
+    document.getElementById("propertyStamp").src = propertyStamp;
+    
+  } else if (choice === 'key') {
+    para.textContent = 'J-115 Delta-2 Greater Noida, GB Nagar Gautam Buddha Nagar, (U.P) 201308';
+    var propertyMob = '+91 92506 19000';
+    var propertyStamp = './key-stamp.png';
+    document.getElementById("propertyMob").innerHTML = propertyMob;
+    document.getElementById("propertyStamp").src = propertyStamp;
+    
+  } else if (choice === 'shashi') {
+    para.textContent = 'H.NO. E29 Gali No. 13 Near Mother Dairy Pocket 5 Shashigarden Mayur Vihar Phase 1 Delhi 110091';
+    var propertyMob = '+91 99584 29000';
+    var propertyStamp = './shashi-stamp.png';
+    document.getElementById("propertyMob").innerHTML = propertyMob;
+    document.getElementById("propertyStamp").src = propertyStamp;
+    
+  } else {
+    para.textContent = '';
+  }
+}
+</script>
+
+</body>
+</html>
