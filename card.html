@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat', sans-serif;
+}
+/* full screen */
+.home-page {
+	height: 100vh;
+	width: 100%;
+}
+/* main header */
+.header {
+	height: 2rem;
+	padding: .5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, .3);
+	border-radius: 0px 0px 10px 10px;
+}
+/* logo settings */
+.logo-animation {
+  display: none;
+  justify-content: center;
+  font-size: 1.25rem;
+  list-style-type: none;
+  gap: 0px;
+}
+/* logo child settings */
+.logo-animation li {
+  font-family: 'Eagle Lake', cursive;
+  animation-name: falling;
+  animation-duration: calc(var(--i) * .5s);
+  background: #ffbf00;
+  background: linear-gradient(to right, #ffbf00 0%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* logo animation */
+@keyframes falling {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* logo image shadow */
+#logo-main {
+  -webkit-filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .25));
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .25));
+}
+/* menu button */
+.header span {
+	font-weight: 700;
+}
+/* menu settings */
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255,1); 
+  overflow-x: hidden; 
+  transition: 0.5s;
+}
+.overlay-content {
+  position: relative;
+  top: 25%; 
+  width: 100%; 
+  text-align: center; 
+  margin-top: 30px; 
+}
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #000;
+  display: block;
+  transition: 0.3s; 
+}
+.overlay a:hover, .overlay a:focus {
+  color: red;
+}
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+/* hero section */
+.hero-section {
+	margin-top: .5rem;
+	padding: .5rem;
+	height: 89%;
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+	align-items: center;
+}
+/* hero image */
+.hero-section > img {
+    width: 100%;
+    animation: right 2s;
+}
+@keyframes right {
+	from {
+		opacity: 0;
+		margin-left: -10rem;
+    }
+    to {
+    	opacity: 1;
+        margin-left: 0;
+    }
+}
+/* typewriter effect */
+.hero-section h1 {
+	text-align: center;
+	font-size: 1.5rem;
+	height: 4rem;,
+}
+/* countup */
+.countUp {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+}
+.container {
+	width: 33.33%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: .3rem;
+	gap: .3rem;
+}
+.container > p {
+	font-weight: 700;
+	font-size: 1.3rem;
+}
+.container > .text {
+	font-size: .8rem;
+	font-weight: 600;
+}
+.hero-section > p {
+	margin-top: 1rem;
+	font-weight: 500;
+}
+/* booking button */
+.booking-btn {
+	width: 12rem;
+	height: 2rem;
+	display: flex;
+	margin-top: 1rem;
+}
+.booking-btn a {
+	width: 50%;
+	background: #000;
+	text-align: center;
+	color: #fff;
+	text-decoration: none;
+	padding: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: .2rem;
+}
+.booking-btn > a > img {
+	width: 1.3rem;
+}
+.booking-btn > .call {
+	border-radius: 99px 0px 0px 99px;
+}
+.booking-btn > .wa {
+	border-radius: 00px 99px 99px 0px;
+}
+.details {
+	display: flex;
+	flex-direction: column;
+	gap: 0rem;
+}
+.details-child {
+	display: flex;
+	flex-direction: column;
+	gap: .3rem;
+	padding: .5rem;
+	margin: .8rem 1rem;
+	background: rgba(0, 0, 0, .08);
+	border-radius: 5px;
+	box-shadow: 1px 2px 5px rgba(0, 0, 0, .25);
+}
+.details-child > a {
+	padding: .5rem 1rem;
+	background: #000;
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+	width: 6rem;
+	border-radius: 3px;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, .35);
+}
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: .1rem;
+	font-size: .7rem;
+	padding: .3rem;
+	background: rgba(0, 0, 0, .75);
+	color: #fff;
+}
+.footer a {
+	color: #0085FF;
+	font-weight: bolder;
+	text-decoration: none;
+}
+</style>
+</head>
+<body>
+<!--home page-->
+<div class="home-page">
+	
+<!--header-->
+<div class="header">
+ <img src="./gold-logo.png" width="35" id="logo-main" onclick='functionLogo();'>
+ <ul class="logo-animation" id="logo-hidden">
+   <li style="--i:1">G</li>
+   <li style="--i:1.3">r</li>
+   <li style="--i:1.6">o</li>
+   <li style="--i:1.9">u</li>
+   <li style="--i:2.2">p</li>
+   <li style="--i:2.5; margin: .2em"> </li>
+   <li style="--i:2.8">O</li>
+   <li style="--i:3.1">f</li>
+   <li style="--i:3.4; margin: .2em"> </li>
+   <li style="--i:3.7">D</li>
+   <li style="--i:4.0">i</li>
+   <li style="--i:4.3">s</li>
+   <li style="--i:4.6">c</li>
+   <li style="--i:4.9">o</li>
+   <li style="--i:5.2">v</li>
+   <li style="--i:5.5">e</li>
+   <li style="--i:5.8">r</li>
+   <li style="--i:6.1">y</li>
+ </ul>
+ 
+ <span onclick="openNav()">.more</span>
+</div>
+<!--end hearder-->
+
+<!--menu links-->
+<div id="myNav" class="overlay">
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <!-- Overlay content -->
+    <div class="overlay-content">
+    <a href="#">About</a>
+    <a href="#">Guest</a>
+    <a href="#">Login</a>
+    <a href="#">Contact</a>
+    </div>
+</div>
+<!--end menu links-->
+	
+<!--hero section-->
+<div class="hero-section">
+	<img src="walking.gif" alt="a man walking">
+	<h1 id="typed2">royal</h1>
+
+</br>
+<!--countUp-->
+<div class="countUp">
+	
+        <div class="container">
+            <img src="./smile.svg" width="30">
+            <p>
+            	<span class="num" data-val="226">000</span>k+
+            </p>
+            <span class="text">Happy Guest</span>
+        </div>
+
+        <div class="container">
+            <img src="./home.svg" width="30">
+            <p>
+            	<span class="num" data-val="16">00</span>+
+            </p>
+            <span class="text">Property</span>
+        </div>
+
+        <div class="container">
+            <img src="./star.svg" width="30">
+            <p>
+            	<span class="num" data-val="8"></span>+
+            </p>
+            <span class="text">Rating</span>
+        </div>
+        
+ </div><!--end countUp-->
+ 	
+ <p>for booking call or text us.</p>	
+<div class="booking-btn">
+	<a class="call" href="tel:6388957565"><img src="./telephone.png"></a>
+	<a class="wa" href="https://wa.me/+916388957565"><img src="./whatsapp.png"></a>
+</div>
+</div><!--end hero section-->
+</div><!--end home page-->
+
+<!--detaila-->
+<div class="details">
+	<div class="details-child">
+		<h1>Green Park</h1>
+		<h4>Ho. No: 46/34 Near Green Park Metro Station Gate Number-1 New Delhi 110016 IN.</h4>
+		<h4>+91 82875-99290</br>+91 99584-29000</h4>
+		<a href="#">Directions</a>
+    </div>
+    
+    <div class="details-child">
+		<h1>Pandav Nagar</h1>
+		<h4>J-4, Gali No. 8, Pandav Nagar Near Janta Dairy, Delhi - 110092, Delhi</h4>
+		<h4>+91 82875-99290</h4>
+		<a href="#">Directions</a>
+    </div>
+    
+    <div class="details-child">
+		<h1>Discovery Key</h1>
+		<h4>J-115 Delta-2 Greater Noida, GB Nagar Gautam Buddha Nagar, (U.P)-201308</h4>
+		<h4>+91 92506-19000</h4>
+		<a href="#">Directions</a>
+    </div>
+    
+    <div class="details-child">
+		<h1>Shashi Garden</h1>
+		<h4>H.NO. E29 Gali No. 13 Near Mother Dairy Pocket 5 Shashi Garden Mayur Vihar Phase 1 Delhi-110091</h4>
+		<h4>+91 99584-29000</h4>
+		<a href="#">Directions</a>
+    </div>
+</div>
+<!--end details-->
+
+<!--footer-->
+<div class="footer">
+	MADE WITH  IN  By <a href="https://instagram.com/iamabhayin">Abhay</a>
+</div>
+<script>
+//typewriter script 
+var typed2 = new Typed('#typed2', {
+    strings: ['Group of discovery.', 'Collection of top class PG and Hotels in Delhi.', 'We will always be your favorite hotel.'],
+    typeSpeed: 100,
+    backSpeed: 50,
+    fadeOut: true,
+    showCursor: false, 
+    loop: true
+  });
+</script>
+
+<script>
+//countUp script 
+let valueDisplays = document.querySelectorAll(".num");
+let interval = 5000;
+
+valueDisplays.forEach((valueDisplay) => {
+  let startValue = 0;
+  let endValue = parseInt(valueDisplay.getAttribute("data-val"));
+  let duration = Math.floor(interval / endValue);
+  let counter = setInterval(function () {
+    startValue += 1;
+    valueDisplay.textContent = startValue;
+    if (startValue == endValue) {
+      clearInterval(counter);
+    }
+  }, duration);
+});
+</script>
+<script>
+//opean menu overlay 
+function openNav() {
+  document.getElementById("myNav").style.width = "100%";
+}
+//close menu overlay 
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+}
+//toggle logo animation 
+function functionLogo() {
+	document.getElementById("logo-main").style.display = "none";
+	document.getElementById("logo-hidden").style.display = "flex";
+}
+</script>
+</body>
+</html>
